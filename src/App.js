@@ -1,10 +1,12 @@
 import "./css/reset.css";
 import "./css/styles.css";
-
+import Header from "./components/header/header";
+import SelectMovie from "./components/SelectMovie";
 function App() {
   return (
     <div className="App">
-      <h1>Here we are</h1>
+      <Header />
+      <SelectMovie />
     </div>
   );
 }
