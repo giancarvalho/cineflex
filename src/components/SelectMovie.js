@@ -2,13 +2,13 @@ import MovieList from "./MovieList";
 
 export default function SelectMovie() {
   return (
-    <main>
+    <>
       <div className="title">
         {" "}
         <h1>Selecione o filme</h1>
       </div>
       <MovieList catalog={catalog} />
-    </main>
+    </>
   );
 }
 

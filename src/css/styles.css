@@ -60,3 +60,27 @@ main {
   width: 129px;
   height: 193px;
 }
+
+.movie-sessions {
+  width: 100%;
+}
+
+.session {
+  margin: 0 24px 20px;
+}
+
+.session h2 {
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.session button {
+  height: 42px;
+  width: 83px;
+  margin-right: 8px;
+  background-color: #e8833a;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  border-radius: 3px;
+}
