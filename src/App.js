@@ -10,9 +10,9 @@ function App() {
     <div className="App">
       <Header />
       <main>
-        {/* <SelectMovie /> */}
+        <SelectMovie />
         {/* <Sessions /> */}
-        <Seats />
+        {/* <Seats /> */}
         {/* <Success /> */}
       </main>
     </div>
