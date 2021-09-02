@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getSeats } from "./URLs";
+
 function Seat({ seat }) {
   return (
     <div className={seat.isAvailable ? "seat" : "seat occupied"}>{seat.id}</div>
@@ -5,6 +9,21 @@ function Seat({ seat }) {
 }
 
 export default function Seats() {
+  const { id } = useParams();
+  const [seatList, setSeatList] = useState([]);
+
+  useEffect(() => {
+    let promise = getSeats(id);
+    promise.then((response) => {
+      console.log(response);
+      setSeatList(...[response.data]);
+    });
+  }, []);
+
+  if (seatList.length === 0) {
+    return "carregando lista de assentos";
+  }
+
   return (
     <>
       <div className="title">
@@ -13,7 +32,7 @@ export default function Seats() {
       </div>
       <div className="choose-seats">
         <div className="seat-list">
-          {SESSION.seats.map((item, index) => (
+          {seatList.seats.map((item, index) => (
             <Seat key={index} seat={item} />
           ))}
         </div>
@@ -44,11 +63,11 @@ export default function Seats() {
         <button className="reserve-seats">Reservar assento(s)</button>
         <div className="chosen-session">
           <div className="poster">
-            <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg" />
+            <img src={seatList.movie.posterURL} />
           </div>
           <div className="session-details">
-            <p>Enola Holmes</p>
-            <p>{`${SESSION.day.weekday} - ${SESSION.name}`}</p>
+            <p>{seatList.movie.title}</p>
+            <p>{`${seatList.day.weekday} - ${seatList.name}`}</p>
           </div>
         </div>
       </div>
