@@ -1,3 +1,7 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 function ShowTimes({ timesList }) {
   return timesList.map((time) => <button>{time.name}</button>);
 }
@@ -15,23 +19,38 @@ function Session({ day }) {
 }
 
 export default function Sessions() {
-  const { days } = sessionData;
+  const { id } = useParams();
+  const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies/${id}/showtimes`;
+  const [session, setSession] = useState([]);
+
+  useEffect(() => {
+    const promise = axios(URL);
+
+    promise.then((response) => {
+      setSession(...[response.data]);
+    });
+  }, []);
+
+  if (session.length === 0) {
+    return "Carregando sessao";
+  }
+
   return (
     <>
       <div className="title">
         <h1>Selecione o horário</h1>
       </div>
       <div className="movie-sessions">
-        {days.map((day, index) => (
+        {session.days.map((day, index) => (
           <Session day={day} key={index} />
         ))}
       </div>
       <div className="chosen-session">
         <div className="poster">
-          <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg" />
+          <img src={session.posterURL} />
         </div>
         <div className="session-details">
-          <p>Enola Holmes</p>
+          <p>{session.title}</p>
         </div>
       </div>
     </>

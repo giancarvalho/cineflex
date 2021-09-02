@@ -3,16 +3,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 export default function SelectMovie() {
   const URL =
-    "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/movies";
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies";
   const [movieList, setMovieList] = useState([]);
 
   useEffect(() => {
     axios(URL)
       .then((response) => {
         setMovieList(...[response.data]);
-        console.log(response);
       })
-      .catch((error) => alert(error.status));
+      .catch((error) => alert(error.response.status));
   }, []);
 
   return (
