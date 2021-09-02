@@ -103,9 +103,28 @@ button {
 }
 
 .seat-list {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
   height: 200px;
   width: 90%;
-  background-color: lightblue;
+}
+
+.seat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 26px;
+  width: 26px;
+  background-color: #c3cfd9;
+  border: 1px solid #808f9d;
+  border-radius: 50%;
+  font-size: 11px;
+  margin-right: 5px;
+}
+
+.seat:nth-child(10n) {
+  margin-right: 0px;
 }
 
 .buyer-details {
@@ -162,9 +181,16 @@ button {
   height: 89px;
   width: 64px;
   background-color: #ffffff;
+  border-radius: 3px;
 }
 
 .chosen-session img {
   width: 48px;
   height: s;
+}
+
+.session-details p {
+  margin: 15px;
+  font-size: 18px;
+  color: #293845;
 }
