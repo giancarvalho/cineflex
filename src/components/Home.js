@@ -1,13 +1,11 @@
 import MovieList from "./MovieList";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { getMovies } from "./URLs";
 export default function SelectMovie() {
-  const URL =
-    "https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies";
   const [movieList, setMovieList] = useState([]);
 
   useEffect(() => {
-    axios(URL)
+    getMovies()
       .then((response) => {
         setMovieList(...[response.data]);
       })

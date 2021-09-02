@@ -20,6 +20,8 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  z-index: 1;
 }
 
 header h1 {
@@ -33,6 +35,7 @@ main {
   width: 100vw;
   flex-direction: column;
   align-items: center;
+  margin-top: 55px;
 }
 
 .title {

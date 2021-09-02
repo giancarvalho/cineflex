@@ -1,9 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { getSessions } from "./URLs";
 
 function ShowTimes({ timesList }) {
-  return timesList.map((time) => <button>{time.name}</button>);
+  return timesList.map((time) => (
+    <Link to="/sessions/:id/seats/:id">
+      <button>{time.name}</button>
+    </Link>
+  ));
 }
 
 function Session({ day }) {
@@ -20,11 +24,10 @@ function Session({ day }) {
 
 export default function Sessions() {
   const { id } = useParams();
-  const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies/${id}/showtimes`;
   const [session, setSession] = useState([]);
 
   useEffect(() => {
-    const promise = axios(URL);
+    const promise = getSessions(id);
 
     promise.then((response) => {
       setSession(...[response.data]);
