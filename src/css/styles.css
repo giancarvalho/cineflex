@@ -83,13 +83,13 @@ main {
 
 button {
   height: 42px;
-  width: 83px;
   margin-right: 8px;
   background-color: #e8833a;
   border: none;
   color: #ffffff;
   font-size: 18px;
   border-radius: 3px;
+  padding: 0 15px;
 }
 
 .choose-seats {
@@ -214,6 +214,30 @@ button {
 
 .session-details p {
   margin: 15px;
-  font-size: 18px;
+  font-size: 20px;
   color: #293845;
+}
+
+.success {
+  color: #247a6b;
+  font-weight: bold;
+}
+
+.order-details {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.details {
+  font-size: 22px;
+  color: #293845;
+  margin: 20px;
+  line-height: 25px;
+}
+
+.details h2 {
+  font-weight: bold;
+  margin-bottom: 10px;
 }

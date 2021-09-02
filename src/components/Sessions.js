@@ -26,6 +26,14 @@ export default function Sessions() {
           <Session day={day} key={index} />
         ))}
       </div>
+      <div className="chosen-session">
+        <div className="poster">
+          <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg" />
+        </div>
+        <div className="session-details">
+          <p>Enola Holmes</p>
+        </div>
+      </div>
     </>
   );
 }
