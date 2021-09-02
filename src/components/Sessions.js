@@ -3,7 +3,6 @@ function ShowTimes({ timesList }) {
 }
 
 function Session({ day }) {
-  console.log(day);
   return (
     <div className="session">
       <h2>
@@ -23,8 +22,8 @@ export default function Sessions() {
         <h1>Selecione o horário</h1>
       </div>
       <div className="movie-sessions">
-        {days.map((day) => (
-          <Session day={day} />
+        {days.map((day, index) => (
+          <Session day={day} key={index} />
         ))}
       </div>
     </>

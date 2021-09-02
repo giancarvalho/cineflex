@@ -121,12 +121,35 @@ button {
   border-radius: 50%;
   font-size: 11px;
   margin-right: 5px;
+  flex: 0 0 8%;
 }
 
 .seat:nth-child(10n) {
   margin-right: 0px;
 }
 
+.seat.selected {
+  background-color: #8dd7cf;
+}
+
+.seat.occupied {
+  background-color: #fbe192;
+}
+
+.examples {
+  width: 100%;
+  display: flex;
+  font-size: 13px;
+  justify-content: space-around;
+}
+
+.examples .seat {
+  margin: 0 auto;
+}
+
+.examples p {
+  margin: 10px 0;
+}
 .buyer-details {
   display: flex;
   flex-direction: column;
