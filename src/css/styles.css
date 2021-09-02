@@ -195,6 +195,7 @@ button {
   background-color: #dfe6ed;
   display: flex;
   padding: 14px;
+  border-top: 1px solid #9eadba;
 }
 
 .chosen-session .poster {

@@ -11,8 +11,8 @@ function App() {
       <Header />
       <main>
         {/* <SelectMovie /> */}
-        <Sessions />
-        {/* <Seats /> */}
+        {/* <Sessions /> */}
+        <Seats />
         {/* <Success /> */}
       </main>
     </div>
