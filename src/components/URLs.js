@@ -13,4 +13,11 @@ function getSeats(id) {
   return axios(`${URL}/showtimes/${id}/seats`);
 }
 
-export { getMovies, getSessions, getSeats };
+function sendReservationRequest(userInfo) {
+  return axios.post(
+    `https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many`,
+    userInfo
+  );
+}
+
+export { getMovies, getSessions, getSeats, sendReservationRequest };

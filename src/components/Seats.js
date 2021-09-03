@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getSeats } from "./URLs";
+import { getSeats, sendReservationRequest } from "./URLs";
 const order = { ids: [], name: "", cpf: "" };
+let result;
 
 function Seat({ seat, userInfo, setUserInfo }) {
   const [seatSelected, setSeatSelected] = useState(null);
@@ -56,6 +57,20 @@ export default function Seats() {
       ...userInfo,
       cpf: e.target.value,
     }));
+  }
+
+  function makeReservation() {
+    const promise = sendReservationRequest(userInfo);
+
+    promise.then((response) => {
+      result = response;
+      alert("Deu certo!");
+    });
+    promise.catch((response) => {
+      result = response;
+      alert("Deu errado!");
+      debugger;
+    });
   }
 
   useEffect(() => {
@@ -124,7 +139,9 @@ export default function Seats() {
             />
           </div>
         </div>
-        <button className="reserve-seats">Reservar assento(s)</button>
+        <button className="reserve-seats" onClick={makeReservation}>
+          Reservar assento(s)
+        </button>
         <div className="chosen-session">
           <div className="poster">
             <img src={seatList.movie.posterURL} />
