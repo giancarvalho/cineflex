@@ -3,18 +3,23 @@ import { useParams } from "react-router-dom";
 import { getSeats } from "./URLs";
 const order = { ids: [], name: "", cpf: "" };
 
-function Seat({ seat }) {
+function Seat({ seat, userInfo, setUserInfo }) {
   const [seatSelected, setSeatSelected] = useState(null);
 
-  function selectSeat(id, isAvailable) {
-    const { ids } = order;
-
+  function selectSeat(id) {
+    console.log(userInfo["ids"]);
     if (!seatSelected) {
-      ids.push(id);
+      setUserInfo((userInfo) => ({
+        ...userInfo,
+        ids: [...userInfo["ids"], id],
+      }));
       setSeatSelected("selected");
     } else {
+      setUserInfo((userInfo) => ({
+        ...userInfo,
+        ids: [...userInfo["ids"].filter((seatId) => seatId !== id)],
+      }));
       setSeatSelected(null);
-      ids.splice(ids.indexOf(id), 1);
     }
   }
 
@@ -37,6 +42,21 @@ function Seat({ seat }) {
 export default function Seats() {
   const { id } = useParams();
   const [seatList, setSeatList] = useState([]);
+  const [userInfo, setUserInfo] = useState({ ids: [], name: "", cpf: "" });
+
+  function assignName(e) {
+    setUserInfo(() => ({
+      ...userInfo,
+      name: e.target.value,
+    }));
+  }
+
+  function assignCPF(e) {
+    setUserInfo(() => ({
+      ...userInfo,
+      cpf: e.target.value,
+    }));
+  }
 
   useEffect(() => {
     let promise = getSeats(id);
@@ -58,7 +78,12 @@ export default function Seats() {
       <div className="choose-seats">
         <div className="seat-list">
           {seatList.seats.map((item, index) => (
-            <Seat key={index} seat={item} />
+            <Seat
+              key={index}
+              seat={item}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+            />
           ))}
         </div>
         <div className="examples">
@@ -78,11 +103,25 @@ export default function Seats() {
         <div className="buyer-details">
           <div className="name">
             <label>Nome do comprador:</label>
-            <input placeholder="Digite seu nome..." />
+            <input
+              type="text"
+              placeholder="Digite seu nome..."
+              value={userInfo.name}
+              onChange={(e) => {
+                assignName(e);
+              }}
+            />
           </div>
           <div className="cpf">
             <label>CPF do comprador: </label>
-            <input placeholder="Digite seu CPF..." />
+            <input
+              type="number"
+              placeholder="Digite seu CPF..."
+              value={userInfo.cpf}
+              onChange={(e) => {
+                assignCPF(e);
+              }}
+            />
           </div>
         </div>
         <button className="reserve-seats">Reservar assento(s)</button>
