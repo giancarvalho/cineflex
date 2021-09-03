@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 function Movie({ poster, id }) {
-  console.log(id);
   return (
     <Link to={`sessions/${id}`}>
       <div className="movie">

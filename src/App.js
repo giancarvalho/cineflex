@@ -8,27 +8,30 @@ import Success from "./components/SuccessPage";
 import Seats from "./components/Seats";
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Header />
-        <Switch>
+    <>
+      {" "}
+      <BrowserRouter>
+        <div className="App">
+          <Header />
           <main>
-            <Route path="/" exact>
-              <SelectMovie />
-            </Route>
-            <Route path="/sessions/:id" exact>
-              <Sessions />
-            </Route>
-            <Route path="/sessions/:id/seats/:id" exact>
-              <Seats />
-            </Route>
-            <Route path="/sessions/:id/seats/:id/success/:id" exact>
-              <Success />
-            </Route>
+            <Switch>
+              <Route path="/" exact>
+                <SelectMovie />
+              </Route>
+              <Route path="/sessions/:id" exact>
+                <Sessions />
+              </Route>
+              <Route path="/sessions/seats/:id" exact>
+                <Seats />
+              </Route>
+              <Route path="/sessions/:id/seats/:id/success/:id" exact>
+                <Success />
+              </Route>
+            </Switch>
           </main>
-        </Switch>
-      </div>
-    </BrowserRouter>
+        </div>
+      </BrowserRouter>
+    </>
   );
 }
 

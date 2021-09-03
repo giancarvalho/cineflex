@@ -2,22 +2,22 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getSessions } from "./URLs";
 
-function ShowTimes({ timesList, id }) {
+function ShowTimes({ timesList }) {
   return timesList.map((time) => (
-    <Link to={`/sessions/${id}/seats/${id}`}>
+    <Link to={`/sessions/seats/${time.id}`}>
       <button>{time.name}</button>
     </Link>
   ));
 }
 
-function Session({ day, id }) {
+function Session({ day }) {
   return (
     <div className="session">
       <h2>
         <span>{day.weekday}</span> - <span>{day.date}</span>
       </h2>
 
-      <ShowTimes timesList={day.showtimes} id={id} />
+      <ShowTimes timesList={day.showtimes} id={day.id} />
     </div>
   );
 }
@@ -43,7 +43,7 @@ export default function Sessions() {
       </div>
       <div className="movie-sessions">
         {session.days.map((day, index) => (
-          <Session day={day} id={id} key={index} />
+          <Session day={day} key={index} />
         ))}
       </div>
       <div className="chosen-session">

@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { getSeats } from "./URLs";
 
 function Seat({ seat }) {
-  console.log(seat);
   return (
     <div className={seat.isAvailable ? "seat" : "seat occupied"}>
       {seat.id - 1100}
