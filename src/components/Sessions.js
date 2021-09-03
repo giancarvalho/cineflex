@@ -5,7 +5,7 @@ import { getSessions } from "./APIRequests";
 function ShowTimes({ timesList }) {
   return timesList.map((time, index) => (
     <Link to={`/sessions/seats/${time.id}`} key={index}>
-      <button>{time.name}</button>
+      <button className="standard">{time.name}</button>
     </Link>
   ));
 }

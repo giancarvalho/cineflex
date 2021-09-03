@@ -147,7 +147,7 @@ export default function Seats({ userInfo, setUserInfo }) {
             />
           </div>
         </div>
-        <button className="reserve-seats" onClick={makeReservation}>
+        <button className="reserve-seats standard" onClick={makeReservation}>
           Reservar assento(s)
         </button>
         <div className="chosen-session">

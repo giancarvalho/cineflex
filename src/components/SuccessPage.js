@@ -42,7 +42,7 @@ export default function Success({ userInfo, setUserInfo }) {
         </div>
       </div>
       <Link to="/" onClick={() => setUserInfo({ ids: [], name: "", cpf: "" })}>
-        <button>Voltar para a Home</button>
+        <button className="standard">Voltar para a Home</button>
       </Link>
     </>
   );

@@ -17,9 +17,6 @@ header {
   width: 100vw;
   height: 55px;
   background-color: #c3cfd9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: fixed;
   z-index: 1;
 }
@@ -27,6 +24,24 @@ header {
 header h1 {
   font-size: 34px;
   color: #e8833a;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+header button {
+  position: absolute;
+  right: 2%;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  color: #e8833a;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
 }
 
 main {
@@ -84,7 +99,7 @@ main {
   margin-bottom: 25px;
 }
 
-button {
+.standard {
   height: 42px;
   margin-right: 8px;
   background-color: #e8833a;
