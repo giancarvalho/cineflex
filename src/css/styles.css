@@ -109,20 +109,20 @@ button {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  height: 200px;
-  width: 90%;
+  height: 240px;
+  width: 95%;
 }
 
 .seat {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 26px;
-  width: 26px;
+  height: 36px;
+  width: 36px;
   background-color: #c3cfd9;
   border: 1px solid #808f9d;
   border-radius: 50%;
-  font-size: 10px;
+  font-size: 12px;
   margin-right: 5px;
   flex: 0 0 8%;
 }
