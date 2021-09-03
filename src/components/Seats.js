@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { getSeats, sendReservationRequest } from "./URLs";
-const order = { ids: [], name: "", cpf: "" };
-let result;
 
 function Seat({ seat, userInfo, setUserInfo }) {
   const [seatSelected, setSeatSelected] = useState(null);
@@ -40,10 +38,10 @@ function Seat({ seat, userInfo, setUserInfo }) {
   );
 }
 
-export default function Seats() {
+export default function Seats({ userInfo, setUserInfo }) {
   const { id } = useParams();
   const [seatList, setSeatList] = useState([]);
-  const [userInfo, setUserInfo] = useState({ ids: [], name: "", cpf: "" });
+  const history = useHistory();
 
   function assignName(e) {
     setUserInfo(() => ({
@@ -63,11 +61,11 @@ export default function Seats() {
     const promise = sendReservationRequest(userInfo);
 
     promise.then((response) => {
-      result = response;
       alert("Deu certo!");
+      history.push(`/success/${id}`);
     });
+
     promise.catch((response) => {
-      result = response;
       alert("Deu errado!");
       debugger;
     });

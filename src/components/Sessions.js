@@ -3,8 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { getSessions } from "./URLs";
 
 function ShowTimes({ timesList }) {
-  return timesList.map((time) => (
-    <Link to={`/sessions/seats/${time.id}`}>
+  return timesList.map((time, index) => (
+    <Link to={`/sessions/seats/${time.id}`} key={index}>
       <button>{time.name}</button>
     </Link>
   ));

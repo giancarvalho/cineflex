@@ -6,7 +6,11 @@ import SelectMovie from "./components/Home";
 import Sessions from "./components/Sessions";
 import Success from "./components/SuccessPage";
 import Seats from "./components/Seats";
+import { useState } from "react";
+
 function App() {
+  const [userInfo, setUserInfo] = useState({ ids: [], name: "", cpf: "" });
+  console.log(userInfo);
   return (
     <>
       {" "}
@@ -15,17 +19,15 @@ function App() {
           <Header />
           <main>
             <Switch>
-              <Route path="/" exact>
-                <SelectMovie />
-              </Route>
+              <Route path="/" component={SelectMovie} exact />
               <Route path="/sessions/:id" exact>
                 <Sessions />
               </Route>
               <Route path="/sessions/seats/:id" exact>
-                <Seats />
+                <Seats userInfo={userInfo} setUserInfo={setUserInfo} />
               </Route>
-              <Route path="/sessions/:id/seats/:id/success/:id" exact>
-                <Success />
+              <Route path="/success/:id" exact>
+                <Success userInfo={userInfo} setUserInfo={setUserInfo} />
               </Route>
             </Switch>
           </main>

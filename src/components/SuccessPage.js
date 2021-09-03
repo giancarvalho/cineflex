@@ -1,4 +1,22 @@
-export default function Success() {
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { getSeats } from "./URLs";
+
+export default function Success({ userInfo, setUserInfo }) {
+  const [chosenSession, setChosenSession] = useState([]);
+  const { id } = useParams();
+
+  useEffect(() => {
+    let promise = getSeats(id);
+    promise.then((response) => {
+      setChosenSession(...[response.data]);
+    });
+  }, []);
+
+  if (chosenSession.length === 0) {
+    return "carregando detalhes do pedido";
+  }
+
   return (
     <>
       <div className="title">
@@ -8,21 +26,24 @@ export default function Success() {
       <div className="order-details">
         <div className="details">
           <h2>Filme e sessão</h2>
-          <p>Enola Holmes</p>
-          <p>24/06/2021 15:00</p>
+          <p>{chosenSession.movie.title}</p>
+          <p>{`${chosenSession.day.weekday} ${chosenSession.name}`}</p>
         </div>
         <div className="details">
           <h2>Ingressos</h2>
-          <p>Assento 15</p>
-          <p>Assento 16</p>
+          {userInfo.ids.map((id, index) => (
+            <p key={index}>Assento {id}</p>
+          ))}
         </div>
         <div className="details">
           <h2>Comprador</h2>
-          <p>Nome: João da Silva Sauro</p>
-          <p>CPF: 123.465.789-10</p>
+          <p>Nome: {userInfo.name}</p>
+          <p>CPF: {userInfo.cpf}</p>
         </div>
       </div>
-      <button>Voltar para a Home</button>
+      <Link to="/" onClick={() => setUserInfo({ ids: [], name: "", cpf: "" })}>
+        <button>Voltar para a Home</button>
+      </Link>
     </>
   );
 }
