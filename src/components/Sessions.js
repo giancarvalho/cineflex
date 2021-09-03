@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getSessions } from "./URLs";
+import { getSessions } from "./APIRequests";
 
 function ShowTimes({ timesList }) {
   return timesList.map((time, index) => (

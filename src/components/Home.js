@@ -1,6 +1,6 @@
 import MovieList from "./MovieList";
 import { useState, useEffect } from "react";
-import { getMovies } from "./URLs";
+import { getMovies } from "./APIRequests";
 export default function SelectMovie() {
   const [movieList, setMovieList] = useState([]);
 

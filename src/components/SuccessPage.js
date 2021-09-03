@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getSeats } from "./URLs";
+import { getSeats } from "./APIRequests";
 
 export default function Success({ userInfo, setUserInfo }) {
   const [chosenSession, setChosenSession] = useState([]);

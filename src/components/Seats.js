@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { getSeats, sendReservationRequest } from "./URLs";
+import { getSeats, sendReservationRequest } from "./APIRequests";
 
 function Seat({ seat, userInfo, setUserInfo }) {
   const [seatSelected, setSeatSelected] = useState(null);
@@ -57,17 +57,27 @@ export default function Seats({ userInfo, setUserInfo }) {
     }));
   }
 
+  function isReadytoReserve() {
+    return (
+      userInfo.ids.length > 0 &&
+      userInfo.name.length > 0 &&
+      userInfo.cpf.length === 11
+    );
+  }
+
   function makeReservation() {
+    if (!isReadytoReserve()) {
+      return;
+    }
+
     const promise = sendReservationRequest(userInfo);
 
     promise.then((response) => {
-      alert("Deu certo!");
       history.push(`/success/${id}`);
     });
 
     promise.catch((response) => {
-      alert("Deu errado!");
-      debugger;
+      alert("Algo deu errado. Tente novamente mais tarde.");
     });
   }
 
