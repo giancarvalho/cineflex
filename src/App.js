@@ -10,7 +10,6 @@ import { useState } from "react";
 
 function App() {
   const [userInfo, setUserInfo] = useState({ ids: [], name: "", cpf: "" });
-  console.log(userInfo);
   return (
     <>
       {" "}
