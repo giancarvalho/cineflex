@@ -6,8 +6,9 @@ const order = { ids: [], name: "", cpf: "" };
 function Seat({ seat }) {
   const [seatSelected, setSeatSelected] = useState(null);
 
-  function selectSeat(id) {
+  function selectSeat(id, isAvailable) {
     const { ids } = order;
+
     if (!seatSelected) {
       ids.push(id);
       setSeatSelected("selected");
@@ -16,10 +17,17 @@ function Seat({ seat }) {
       ids.splice(ids.indexOf(id), 1);
     }
   }
+
+  function seatUnavailable() {
+    alert("Assento não disponível");
+  }
+
   return (
     <div
       className={seat.isAvailable ? `seat ${seatSelected}` : "seat occupied"}
-      onClick={() => selectSeat(seat.id)}
+      onClick={() => {
+        seat.isAvailable ? selectSeat(seat.id) : seatUnavailable();
+      }}
     >
       {seat.id}
     </div>
