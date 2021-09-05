@@ -2,7 +2,18 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getSeats } from "./APIRequests";
 
-export default function Success({ userInfo, setUserInfo }) {
+function Buyer({ customer }) {
+  return (
+    <div className="details">
+      <h2>Comprador</h2>
+      <p>Nome: {customer.nome}</p>
+      <p>CPF: {customer.cpf}</p>
+      <p>Assento: {customer.idAssento}</p>
+    </div>
+  );
+}
+
+export default function Success({ orderInfo, setOrderInfo }) {
   const [chosenSession, setChosenSession] = useState([]);
   const { id } = useParams();
 
@@ -31,17 +42,15 @@ export default function Success({ userInfo, setUserInfo }) {
         </div>
         <div className="details">
           <h2>Ingressos</h2>
-          {userInfo.ids.map((id, index) => (
+          {orderInfo.ids.map((id, index) => (
             <p key={index}>Assento {id}</p>
           ))}
         </div>
-        <div className="details">
-          <h2>Comprador</h2>
-          <p>Nome: {userInfo.name}</p>
-          <p>CPF: {userInfo.cpf}</p>
-        </div>
+        {orderInfo.compradores.map((customer, index) => (
+          <Buyer customer={customer} key={index} />
+        ))}
       </div>
-      <Link to="/" onClick={() => setUserInfo({ ids: [], name: "", cpf: "" })}>
+      <Link to="/" onClick={() => setOrderInfo({ ids: [], compradores: [] })}>
         <button className="standard">Voltar para a Home</button>
       </Link>
     </>

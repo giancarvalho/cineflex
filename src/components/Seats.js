@@ -73,18 +73,40 @@ function Seat({ seat, orderInfo, setOrderInfo }) {
       }));
       setSeatSelected("selected");
     } else {
-      setOrderInfo(() => ({
-        compradores: [
-          ...orderInfo["compradores"].filter(
-            (customer) => customer.idAssento !== id
-          ),
-        ],
-        ids: [...orderInfo["ids"].filter((seatId) => seatId !== id)],
-      }));
-      setSeatSelected(null);
+      removeSelected(id);
     }
   }
 
+  function removeSelected(id) {
+    const objToBeRemoved = orderInfo["compradores"].find(
+      (customer) => customer.idAssento === id
+    );
+
+    if (objToBeRemoved.nome.lenght > 0 || objToBeRemoved.cpf.length > 0) {
+      if (
+        window.confirm(
+          `Você excluirá o assento ${id} do seu pedido e perderá os dados preenchidos para esse assento. Pressione OK para continuar.`
+        )
+      ) {
+        proceedRemoval(id);
+      } else {
+        return;
+      }
+    }
+    proceedRemoval(id);
+  }
+
+  function proceedRemoval(id) {
+    setOrderInfo(() => ({
+      compradores: [
+        ...orderInfo["compradores"].filter(
+          (customer) => customer.idAssento !== id
+        ),
+      ],
+      ids: [...orderInfo["ids"].filter((seatId) => seatId !== id)],
+    }));
+    setSeatSelected(null);
+  }
   function seatUnavailable() {
     alert("Assento não disponível");
   }
@@ -107,28 +129,49 @@ export default function Seats({ orderInfo, setOrderInfo }) {
   const history = useHistory();
 
   function isReadytoReserve() {
-    return true;
+    const incompleteFields = orderInfo.compradores.filter(
+      (comprador) => comprador.nome.length === 0 || comprador.cpf.length !== 11
+    );
+
+    if (incompleteFields.length === 0) {
+      return true;
+    }
+
+    alertIncompleteData(incompleteFields);
+    return false;
+  }
+
+  function alertIncompleteData(incompleteFields) {
+    let seats = "";
+
+    incompleteFields.forEach((buyer) => {
+      seats += ` ${buyer.idAssento} `;
+    });
+
+    alert(
+      `Por favor, preencha corretamente os campos do(s) assento(s): ${seats}. Confira se preencheu o nome e colocou um CPF válido para cada assento.`
+    );
   }
 
   function makeReservation() {
     if (!isReadytoReserve()) {
+      console.log("not ready!");
       return;
     }
 
-    console.log(orderInfo);
+    const promise = sendReservationRequest(orderInfo);
 
-    // const promise = sendReservationRequest(orderInfo);
+    promise.then((response) => {
+      history.push(`/success/${id}`);
+    });
 
-    // promise.then((response) => {
-    //   history.push(`/success/${id}`);
-    // });
-
-    // promise.catch((response) => {
-    //   alert("Algo deu errado. Tente novamente mais tarde.");
-    // });
+    promise.catch((response) => {
+      alert("Algo deu errado. Tente novamente mais tarde.");
+    });
   }
 
   useEffect(() => {
+    setOrderInfo({ ids: [], compradores: [] });
     let promise = getSeats(id);
     promise.then((response) => {
       setSeatList(...[response.data]);
