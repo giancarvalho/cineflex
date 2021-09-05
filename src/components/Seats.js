@@ -2,42 +2,32 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { getSeats, sendReservationRequest } from "./APIRequests";
 
-function BuyerInput({ id, orderInfo, setOrderInfo, index }) {
-  const [buyer, setBuyer] = useState({
-    idAssento: id,
-    nome: "",
-    cpf: "",
-  });
+function BuyerInput({ buyer, orderInfo, setOrderInfo }) {
+  function changeBuyer(e, key) {
+    const buyerClone = { ...buyer };
 
-  function assignName(e) {
-    setBuyer({ ...buyer, nome: e.target.value });
+    buyerClone[key] = e.target.value;
 
-    updateOrderList();
+    updateBuyerObject(buyerClone);
   }
 
-  function updateOrderList() {
+  function updateOrderList(updatedList) {
     setOrderInfo(() => ({
       ...orderInfo,
-      compradores: updateBuyerObject(),
+      compradores: [...updatedList],
     }));
   }
 
-  function updateBuyerObject() {
+  function updateBuyerObject(buyerClone) {
     let updatedList = orderInfo.compradores.map((customer) => {
-      if (customer.idAssento === buyer.idAssento) {
-        return { ...buyer };
+      if (customer.idAssento === buyerClone.idAssento) {
+        return { ...buyerClone };
       } else {
         return customer;
       }
     });
 
-    return [...updatedList];
-  }
-
-  function assignCPF(e) {
-    setBuyer({ ...buyer, cpf: e.target.value });
-
-    updateOrderList();
+    updateOrderList(updatedList);
   }
 
   console.log(orderInfo);
@@ -48,9 +38,9 @@ function BuyerInput({ id, orderInfo, setOrderInfo, index }) {
         <input
           type="text"
           placeholder="Digite seu nome..."
-          value={buyer.name}
+          value={buyer.nome}
           onChange={(e) => {
-            assignName(e);
+            changeBuyer(e, "nome");
           }}
         />
       </div>
@@ -61,7 +51,7 @@ function BuyerInput({ id, orderInfo, setOrderInfo, index }) {
           placeholder="Digite seu CPF..."
           value={buyer.cpf}
           onChange={(e) => {
-            assignCPF(e);
+            changeBuyer(e, "cpf");
           }}
         />
       </div>
@@ -83,9 +73,9 @@ function Seat({ seat, orderInfo, setOrderInfo }) {
       }));
       setSeatSelected("selected");
     } else {
-      setOrderInfo((orderInfo) => ({
+      setOrderInfo(() => ({
         compradores: [
-          orderInfo["compradores"].filter(
+          ...orderInfo["compradores"].filter(
             (customer) => customer.idAssento !== id
           ),
         ],
@@ -180,10 +170,10 @@ export default function Seats({ orderInfo, setOrderInfo }) {
             <p>Indisponivel</p>
           </div>
         </div>
-        {orderInfo.ids.length > 0 &&
-          orderInfo.ids.map((id, index) => (
+        {orderInfo.compradores.length > 0 &&
+          orderInfo.compradores.map((buyer, index) => (
             <BuyerInput
-              id={id}
+              buyer={buyer}
               orderInfo={orderInfo}
               setOrderInfo={setOrderInfo}
               key={index}
