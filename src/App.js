@@ -9,7 +9,7 @@ import Seats from "./components/Seats";
 import { useState } from "react";
 
 function App() {
-  const [userInfo, setUserInfo] = useState({ ids: [], name: "", cpf: "" });
+  const [orderInfo, setOrderInfo] = useState({ ids: [], compradores: [] });
   return (
     <>
       {" "}
@@ -23,10 +23,10 @@ function App() {
                 <Sessions />
               </Route>
               <Route path="/sessions/seats/:id" exact>
-                <Seats userInfo={userInfo} setUserInfo={setUserInfo} />
+                <Seats orderInfo={orderInfo} setOrderInfo={setOrderInfo} />
               </Route>
               <Route path="/success/:id" exact>
-                <Success userInfo={userInfo} setUserInfo={setUserInfo} />
+                <Success orderInfo={orderInfo} setOrderInfo={setOrderInfo} />
               </Route>
             </Switch>
           </main>

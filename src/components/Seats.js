@@ -2,21 +2,94 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { getSeats, sendReservationRequest } from "./APIRequests";
 
-function Seat({ seat, userInfo, setUserInfo }) {
+function BuyerInput({ id, orderInfo, setOrderInfo, index }) {
+  const [buyer, setBuyer] = useState({
+    idAssento: id,
+    nome: "",
+    cpf: "",
+  });
+
+  function assignName(e) {
+    setBuyer({ ...buyer, nome: e.target.value });
+
+    updateOrderList();
+  }
+
+  function updateOrderList() {
+    setOrderInfo(() => ({
+      ...orderInfo,
+      compradores: updateBuyerObject(),
+    }));
+  }
+
+  function updateBuyerObject() {
+    let updatedList = orderInfo.compradores.map((customer) => {
+      if (customer.idAssento === buyer.idAssento) {
+        return { ...buyer };
+      } else {
+        return customer;
+      }
+    });
+
+    return [...updatedList];
+  }
+
+  function assignCPF(e) {
+    setBuyer({ ...buyer, cpf: e.target.value });
+
+    updateOrderList();
+  }
+
+  console.log(orderInfo);
+  return (
+    <div className="buyer-details">
+      <div className="name">
+        <label>Nome do cliente (assento {buyer.idAssento})</label>
+        <input
+          type="text"
+          placeholder="Digite seu nome..."
+          value={buyer.name}
+          onChange={(e) => {
+            assignName(e);
+          }}
+        />
+      </div>
+      <div className="cpf">
+        <label>CPF do comprador: </label>
+        <input
+          type="number"
+          placeholder="Digite seu CPF..."
+          value={buyer.cpf}
+          onChange={(e) => {
+            assignCPF(e);
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Seat({ seat, orderInfo, setOrderInfo }) {
   const [seatSelected, setSeatSelected] = useState(null);
 
   function selectSeat(id) {
-    console.log(userInfo["ids"]);
     if (!seatSelected) {
-      setUserInfo((userInfo) => ({
-        ...userInfo,
-        ids: [...userInfo["ids"], id],
+      setOrderInfo((orderInfo) => ({
+        ids: [...orderInfo.ids, id],
+        compradores: [
+          ...orderInfo.compradores,
+          { idAssento: id, nome: "", cpf: "" },
+        ],
       }));
       setSeatSelected("selected");
     } else {
-      setUserInfo((userInfo) => ({
-        ...userInfo,
-        ids: [...userInfo["ids"].filter((seatId) => seatId !== id)],
+      setOrderInfo((orderInfo) => ({
+        compradores: [
+          orderInfo["compradores"].filter(
+            (customer) => customer.idAssento !== id
+          ),
+        ],
+        ids: [...orderInfo["ids"].filter((seatId) => seatId !== id)],
       }));
       setSeatSelected(null);
     }
@@ -38,31 +111,13 @@ function Seat({ seat, userInfo, setUserInfo }) {
   );
 }
 
-export default function Seats({ userInfo, setUserInfo }) {
+export default function Seats({ orderInfo, setOrderInfo }) {
   const { id } = useParams();
   const [seatList, setSeatList] = useState([]);
   const history = useHistory();
 
-  function assignName(e) {
-    setUserInfo(() => ({
-      ...userInfo,
-      name: e.target.value,
-    }));
-  }
-
-  function assignCPF(e) {
-    setUserInfo(() => ({
-      ...userInfo,
-      cpf: e.target.value,
-    }));
-  }
-
   function isReadytoReserve() {
-    return (
-      userInfo.ids.length > 0 &&
-      userInfo.name.length > 0 &&
-      userInfo.cpf.length === 11
-    );
+    return true;
   }
 
   function makeReservation() {
@@ -70,15 +125,17 @@ export default function Seats({ userInfo, setUserInfo }) {
       return;
     }
 
-    const promise = sendReservationRequest(userInfo);
+    console.log(orderInfo);
 
-    promise.then((response) => {
-      history.push(`/success/${id}`);
-    });
+    // const promise = sendReservationRequest(orderInfo);
 
-    promise.catch((response) => {
-      alert("Algo deu errado. Tente novamente mais tarde.");
-    });
+    // promise.then((response) => {
+    //   history.push(`/success/${id}`);
+    // });
+
+    // promise.catch((response) => {
+    //   alert("Algo deu errado. Tente novamente mais tarde.");
+    // });
   }
 
   useEffect(() => {
@@ -104,8 +161,8 @@ export default function Seats({ userInfo, setUserInfo }) {
             <Seat
               key={index}
               seat={item}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
+              orderInfo={orderInfo}
+              setOrderInfo={setOrderInfo}
             />
           ))}
         </div>
@@ -123,30 +180,16 @@ export default function Seats({ userInfo, setUserInfo }) {
             <p>Indisponivel</p>
           </div>
         </div>
-        <div className="buyer-details">
-          <div className="name">
-            <label>Nome do comprador:</label>
-            <input
-              type="text"
-              placeholder="Digite seu nome..."
-              value={userInfo.name}
-              onChange={(e) => {
-                assignName(e);
-              }}
+        {orderInfo.ids.length > 0 &&
+          orderInfo.ids.map((id, index) => (
+            <BuyerInput
+              id={id}
+              orderInfo={orderInfo}
+              setOrderInfo={setOrderInfo}
+              key={index}
             />
-          </div>
-          <div className="cpf">
-            <label>CPF do comprador: </label>
-            <input
-              type="number"
-              placeholder="Digite seu CPF..."
-              value={userInfo.cpf}
-              onChange={(e) => {
-                assignCPF(e);
-              }}
-            />
-          </div>
-        </div>
+          ))}
+
         <button className="reserve-seats standard" onClick={makeReservation}>
           Reservar assento(s)
         </button>
