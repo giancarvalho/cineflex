@@ -52,7 +52,7 @@ export default function Success({ orderInfo, setOrderInfo }) {
           <Buyer customer={customer} key={index} />
         ))}
       </div>
-      <Link to="/" onClick={() => setOrderInfo({ ids: [], compradores: [] })}>
+      <Link to="/" onClick={() => setOrderInfo({})}>
         <button className="standard">Voltar para a Home</button>
       </Link>
     </>
