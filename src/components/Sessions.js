@@ -31,7 +31,7 @@ export default function Sessions() {
     getSessions(id).then((response) => {
       setSession(...[response.data]);
     });
-  }, []);
+  }, [id]);
 
   if (session.length === 0) {
     return <Loading />;

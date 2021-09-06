@@ -23,7 +23,7 @@ export default function Success({ orderInfo, setOrderInfo }) {
     promise.then((response) => {
       setChosenSession(...[response.data]);
     });
-  }, []);
+  }, [id]);
 
   if (chosenSession.length === 0) {
     return <Loading />;

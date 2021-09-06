@@ -31,7 +31,6 @@ function BuyerInput({ buyer, orderInfo, setOrderInfo }) {
     updateOrderList(updatedList);
   }
 
-  console.log(orderInfo);
   return (
     <div className="buyer-details">
       <div className="name">
@@ -161,7 +160,6 @@ export default function Seats({ orderInfo, setOrderInfo }) {
 
   function makeReservation() {
     if (!isReadytoReserve()) {
-      console.log("not ready!");
       return;
     }
 
@@ -182,7 +180,7 @@ export default function Seats({ orderInfo, setOrderInfo }) {
     promise.then((response) => {
       setSeatList(...[response.data]);
     });
-  }, []);
+  }, [id, setOrderInfo]);
 
   if (seatList.length === 0) {
     return <Loading />;
