@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getSeats } from "./APIRequests";
-import Loading from "./Loading";
+import { getSeats } from "../shared/APIRequests";
+import Loading from "../shared/Loading";
 
+//renders the details given for each seat
 function Buyer({ customer }) {
   return (
     <div className="details">

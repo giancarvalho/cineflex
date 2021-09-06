@@ -4,6 +4,7 @@ export default function Header() {
   let history = useHistory();
   let location = useLocation();
 
+  //returns true if user isn`t on homepage
   function canShowGoBackButton() {
     return location.pathname !== "/";
   }

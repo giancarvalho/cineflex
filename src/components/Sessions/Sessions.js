@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getSessions } from "./APIRequests";
-import Loading from "./Loading";
+import { getSessions } from "../shared/APIRequests";
+import Loading from "../shared/Loading";
 
+//renders screening hours of each day
 function ShowTimes({ timesList }) {
   return timesList.map((time, index) => (
     <Link to={`/sessions/seats/${time.id}`} key={index}>

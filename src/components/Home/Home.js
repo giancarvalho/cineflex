@@ -1,7 +1,7 @@
 import MovieList from "./MovieList";
 import { useState, useEffect } from "react";
-import { getMovies } from "./APIRequests";
-import Loading from "./Loading";
+import { getMovies } from "../shared/APIRequests";
+import Loading from "../shared/Loading";
 
 export default function SelectMovie() {
   const [movieList, setMovieList] = useState([]);
