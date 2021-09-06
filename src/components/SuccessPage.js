@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getSeats } from "./APIRequests";
+import Loading from "./Loading";
 
 function Buyer({ customer }) {
   return (
@@ -25,7 +26,7 @@ export default function Success({ orderInfo, setOrderInfo }) {
   }, []);
 
   if (chosenSession.length === 0) {
-    return "carregando detalhes do pedido";
+    return <Loading />;
   }
 
   return (

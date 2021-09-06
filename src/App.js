@@ -9,7 +9,7 @@ import Seats from "./components/Seats";
 import { useState } from "react";
 
 function App() {
-  const [orderInfo, setOrderInfo] = useState({ ids: [], compradores: [] });
+  const [orderInfo, setOrderInfo] = useState({});
   return (
     <>
       {" "}

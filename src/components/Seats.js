@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { getSeats, sendReservationRequest } from "./APIRequests";
+import Loading from "./Loading";
 
 function BuyerInput({ buyer, orderInfo, setOrderInfo }) {
   function changeBuyer(e, key) {
@@ -82,10 +83,10 @@ function Seat({ seat, orderInfo, setOrderInfo }) {
       (customer) => customer.idAssento === id
     );
 
-    if (objToBeRemoved.nome.lenght > 0 || objToBeRemoved.cpf.length > 0) {
+    if (objToBeRemoved.nome.length > 0 || objToBeRemoved.cpf.length > 0) {
       if (
         window.confirm(
-          `Você excluirá o assento ${id} do seu pedido e perderá os dados preenchidos para esse assento. Pressione OK para continuar.`
+          `Você excluirá o assento ${id} do seu pedido e perderá os dados preenchidos. Pressione OK para continuar.`
         )
       ) {
         proceedRemoval(id);
@@ -133,6 +134,11 @@ export default function Seats({ orderInfo, setOrderInfo }) {
       (comprador) => comprador.nome.length === 0 || comprador.cpf.length !== 11
     );
 
+    if (orderInfo.ids.length === 0) {
+      alert("Por favor, escolha um assento.");
+      return false;
+    }
+
     if (incompleteFields.length === 0) {
       return true;
     }
@@ -149,7 +155,7 @@ export default function Seats({ orderInfo, setOrderInfo }) {
     });
 
     alert(
-      `Por favor, preencha corretamente os campos do(s) assento(s): ${seats}. Confira se preencheu o nome e colocou um CPF válido para cada assento.`
+      `Por favor, preencha corretamente os campos do(s) assento(s): ${seats}. Confira se digitou um nome e um CPF válido para cada assento.`
     );
   }
 
@@ -179,7 +185,7 @@ export default function Seats({ orderInfo, setOrderInfo }) {
   }, []);
 
   if (seatList.length === 0) {
-    return "carregando lista de assentos";
+    return <Loading />;
   }
 
   return (

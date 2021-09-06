@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getSessions } from "./APIRequests";
+import Loading from "./Loading";
 
 function ShowTimes({ timesList }) {
   return timesList.map((time, index) => (
@@ -33,7 +34,7 @@ export default function Sessions() {
   }, []);
 
   if (session.length === 0) {
-    return "Carregando sessao";
+    return <Loading />;
   }
 
   return (
